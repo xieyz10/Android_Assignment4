@@ -46,6 +46,7 @@ class RegisterActivity : AppCompatActivity()  {
             else {
                 customerViewModel.insertCustomer(context, editText_customerName, editText_passWord,
                     editText_address, editText_city, editText_postalCode, editText_country)
+                Toast.makeText( context,"Succeed!", Toast.LENGTH_LONG).show()
             }
         }
     }

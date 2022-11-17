@@ -2,6 +2,7 @@ package com.example.mingyuanxie_mapd711_assignment4
 
 import android.content.Context
 import android.content.Intent
+import android.content.SharedPreferences
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.View
@@ -31,13 +32,17 @@ class MainActivity : AppCompatActivity() {
     fun initiateProductData(){
         //get content and viewModel
         context = this@MainActivity
-        productViewModel.insertProduct(context, "Apple", "Apple",
-            "Red", "32 GB", "$599")
-        productViewModel.insertProduct(context, "SamSung", "SamSung",
-            "Silver", "64 GB", "$699")
-        productViewModel.insertProduct(context, "Sony", "Sony",
-            "Blue", "128 GB", "799")
-        Toast.makeText( context,"Success!", Toast.LENGTH_LONG).show()
+        productViewModel.getProduct(context)!!.observe(this,Observer{
+            if(it.isEmpty()){
+                Toast.makeText( context,"insert product",Toast.LENGTH_LONG).show()
+                productViewModel.insertProduct(context, "Apple", "Apple",
+                    "Red", "32 GB", "$599")
+                productViewModel.insertProduct(context, "SamSung", "SamSung",
+                    "Silver", "64 GB", "$699")
+                productViewModel.insertProduct(context, "Sony", "Sony",
+                    "Blue", "128 GB", "$799")
+            }
+        })
     }
 
     fun btnLogin_pressed(view: View){
@@ -50,7 +55,13 @@ class MainActivity : AppCompatActivity() {
                     Toast.makeText( context,"Wrong username or password",Toast.LENGTH_LONG).show()
                 }
                 else {
-                    Toast.makeText( context,it.CustomerName+" "+ it.CustomerPassword,Toast.LENGTH_LONG).show()
+                    //Toast.makeText( context,it.CustomerName+" "+ it.CustomerPassword,Toast.LENGTH_LONG).show()
+                    val sharedPref: SharedPreferences = this.getSharedPreferences("MyPref", MODE_PRIVATE)
+                    val editor: SharedPreferences.Editor = sharedPref.edit()
+                    editor.putString("customerId",it.CustomerId.toString())
+                    editor.commit()
+                    val intent = Intent(this@MainActivity, OrderActivity::class.java)
+                    startActivity(intent)
                 }
             })
         }

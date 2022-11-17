@@ -11,7 +11,8 @@ import kotlinx.coroutines.launch
 class ProductRepository {
     companion object {
         var productDatabase: ProductDatabase? = null
-        var productModel: LiveData<ProductModel>? = null
+        var productModel: LiveData<List<ProductModel>>? = null
+        var product: LiveData<ProductModel>? = null
 
         //initialize database
         fun initializeDB(context: Context): ProductDatabase {
@@ -42,11 +43,17 @@ class ProductRepository {
         }
 
         //Initialize getProducts()
-        fun getProduct(context: Context) : LiveData<ProductModel>? {
+        fun getProduct(context: Context) : LiveData<List<ProductModel>>? {
 
             productDatabase = initializeDB(context)
             productModel = productDatabase!!.productDao().getProduct()
             return productModel
+        }
+
+        fun getProductById(context: Context, productId:Int): LiveData<ProductModel>?{
+            productDatabase = initializeDB(context)
+            product = productDatabase!!.productDao().getProductById(productId)
+            return product
         }
 
     }

@@ -1,3 +1,10 @@
 <resources>
     <string name="app_name">MingyuanXie_MAPD711_Assignment4</string>
+    <string name="textView_PhoneMake">Phone Make:</string>
+    <string-array name="phoneMake">
+        <item>Apple</item>
+        <item>SamSung</item>
+        <item>Sony</item>
+    </string-array>
+    <string name="color_prompt"></string>
 </resources>
