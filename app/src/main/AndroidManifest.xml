@@ -16,11 +16,23 @@
         <activity
             android:name=".OrderDetailsActivity"
             android:exported="false"
-            android:label="OrderDetailsActivity" />
+            android:label="UpdateOrderStatus" />
         <activity
-            android:name=".OrderActivity"
+            android:name=".UpdateUserInfo"
             android:exported="false"
-            android:label="OrderActivity" />
+            android:label="UpdateUserInfo" />
+        <activity
+            android:name=".MyOrderActivity"
+            android:exported="false"
+            android:label="MyOrderActivity" />
+        <activity
+            android:name=".ProductDetailsActivity"
+            android:exported="false"
+            android:label="ProductDetailsActivity" />
+        <activity
+            android:name=".ProductListActivity"
+            android:exported="false"
+            android:label="Product List" />
         <activity
             android:name=".RegisterActivity"
             android:exported="false"

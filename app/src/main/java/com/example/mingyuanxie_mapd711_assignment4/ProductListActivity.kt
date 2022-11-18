@@ -4,19 +4,20 @@ import android.content.Context
 import android.content.Intent
 import android.content.SharedPreferences
 import android.os.Bundle
-import android.view.LayoutInflater
+import android.view.Menu
+import android.view.MenuItem
 import android.widget.*
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import com.example.mingyuanxie_mapd711_assignment4.PruductService.ProductViewModel
-import com.example.mingyuanxie_mapd711_assignment4.databinding.ActivityOrderBinding
+import com.example.mingyuanxie_mapd711_assignment4.databinding.ActivityProductlistBinding
 
 
-class OrderActivity: AppCompatActivity()  {
+class ProductListActivity: AppCompatActivity()  {
     lateinit var productViewModel: ProductViewModel
     lateinit var context: Context
-    private lateinit var binding: ActivityOrderBinding
+    private lateinit var binding: ActivityProductlistBinding
     lateinit var productIdArray: Array<Int>
     lateinit var imageIdArray: Array<Int>
     lateinit var phoneModelArray: Array<String>
@@ -25,14 +26,33 @@ class OrderActivity: AppCompatActivity()  {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        binding = ActivityOrderBinding.inflate(layoutInflater)
-        setContentView(R.layout.activity_order)
+        binding = ActivityProductlistBinding.inflate(layoutInflater)
+        setContentView(R.layout.activity_productlist)
         
-        context = this@OrderActivity
+        context = this@ProductListActivity
         productViewModel = ViewModelProvider(this).get(ProductViewModel::class.java)
 
         setupPhoneList()
         setupListItemClickEvent()
+    }
+
+    override fun onCreateOptionsMenu(menu: Menu): Boolean {
+        menuInflater.inflate(R.menu.menu, menu)
+        return true
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        if(item.itemId == R.id.myOrder){
+            var intent = Intent(this@ProductListActivity, MyOrderActivity::class.java)
+            startActivity(intent)
+        }else if(item.itemId == R.id.updateUserInfo){
+            var intent = Intent(this@ProductListActivity, UpdateUserInfo::class.java)
+            startActivity(intent)
+        }else if(item.itemId == R.id.product){
+            var intent = Intent(this@ProductListActivity, ProductListActivity::class.java)
+            startActivity(intent)
+        }
+        return true
     }
 
     fun setupPhoneList(){
@@ -53,7 +73,6 @@ class OrderActivity: AppCompatActivity()  {
                     phoneModelArray[i] = it.get(i).PhoneModel
                     phonePriceArray[i] = it.get(i).Price
                     productIdArray[i] = it.get(i).ProductId!!.toInt()
-//                    Toast.makeText( context,phoneModelArray[i].toString(),Toast.LENGTH_LONG).show()
                 }
                 productArrayList = ArrayList()
                 for(i in phoneModelArray.indices){
@@ -61,7 +80,6 @@ class OrderActivity: AppCompatActivity()  {
                     productArrayList.add(product)
                 }
                 binding.phoneModelListView.isClickable = true
-//                binding.phoneModelListView.adapter = ProductAdapter(this, productArrayList)
                 val arrayAdapter = ProductAdapter(this, productArrayList)
                 var mListView = findViewById<ListView>(R.id.phoneModelListView)
                 mListView.adapter = arrayAdapter
@@ -71,7 +89,7 @@ class OrderActivity: AppCompatActivity()  {
 
     fun setupListItemClickEvent(){
         var mListView = findViewById<ListView>(R.id.phoneModelListView)
-        val intent = Intent(this@OrderActivity, OrderDetailsActivity::class.java)
+        val intent = Intent(this@ProductListActivity, ProductDetailsActivity::class.java)
         mListView.setOnItemClickListener(AdapterView.OnItemClickListener { parent, view, position, id ->
             val sharedPref: SharedPreferences = this.getSharedPreferences("MyPref", MODE_PRIVATE)
             val editor: SharedPreferences.Editor = sharedPref.edit()

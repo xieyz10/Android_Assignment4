@@ -60,7 +60,7 @@ class MainActivity : AppCompatActivity() {
                     val editor: SharedPreferences.Editor = sharedPref.edit()
                     editor.putString("customerId",it.CustomerId.toString())
                     editor.commit()
-                    val intent = Intent(this@MainActivity, OrderActivity::class.java)
+                    val intent = Intent(this@MainActivity, ProductListActivity::class.java)
                     startActivity(intent)
                 }
             })

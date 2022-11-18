@@ -13,6 +13,9 @@ interface OrderDao {
     fun insertOrder(orderModel: OrderModel)
 
     //defining a query method using @Query Annotation
-    @Query("SELECT * FROM `order` ")
-    fun getOrder() : LiveData<List<OrderModel>>
+    @Query("SELECT * FROM `order` where CustomerId = :customerId")
+    fun getOrder(customerId:Int) : LiveData<List<OrderModel>>
+
+    @Query("UPDATE `order` SET status = :status WHERE orderId =:orderId")
+    fun updateOrderStatus(orderId:Int,status:String)
 }

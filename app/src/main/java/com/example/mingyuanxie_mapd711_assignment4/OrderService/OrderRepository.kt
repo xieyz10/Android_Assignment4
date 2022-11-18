@@ -38,11 +38,16 @@ class OrderRepository {
         }
 
         //Initialize getOrder()
-        fun getOrder(context: Context) : LiveData<List<OrderModel>>? {
+        fun getOrder(context: Context, customerId: Int) : LiveData<List<OrderModel>>? {
 
             orderDatabase = initializeDB(context)
-            orderModel = orderDatabase!!.orderDao().getOrder()
+            orderModel = orderDatabase!!.orderDao().getOrder(customerId)
             return orderModel
+        }
+
+        fun updateOrderStatus(context: Context, orderId:Int, status:String){
+            orderDatabase = initializeDB(context)
+            orderDatabase!!.orderDao().updateOrderStatus(orderId,status)
         }
 
     }

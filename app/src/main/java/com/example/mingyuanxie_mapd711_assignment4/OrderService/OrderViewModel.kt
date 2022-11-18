@@ -18,8 +18,12 @@ class OrderViewModel: ViewModel() {
         )
     }
 
-    fun getOrder(context: Context): LiveData<List<OrderModel>>?{
-        liveDataOrder = OrderRepository.getOrder(context)
+    fun getOrder(context: Context, customerId: Int): LiveData<List<OrderModel>>?{
+        liveDataOrder = OrderRepository.getOrder(context,customerId)
         return liveDataOrder
+    }
+
+    fun updateOrderStatus(context: Context, orderId:Int, status:String){
+        OrderRepository.updateOrderStatus(context, orderId, status)
     }
 }

@@ -1,7 +1,6 @@
 package com.example.mingyuanxie_mapd711_assignment4
 
 import android.app.Activity
-import android.media.Image
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
