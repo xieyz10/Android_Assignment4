@@ -18,7 +18,7 @@
             android:exported="false"
             android:label="UpdateOrderStatus" />
         <activity
-            android:name=".UpdateUserInfo"
+            android:name=".UpdateUserInfoActivity"
             android:exported="false"
             android:label="UpdateUserInfo" />
         <activity

@@ -2,6 +2,7 @@ package com.example.mingyuanxie_mapd711_assignment4.CustomerService
 
 import android.content.Context
 import androidx.lifecycle.LiveData
+import com.example.mingyuanxie_mapd711_assignment4.OrderService.OrderRepository
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
@@ -20,23 +21,27 @@ class CustomerRepository {
         //Initialize insertStudent()
         fun insertCustomer(
             context: Context,
-            customerName: String,
-            customerPassword: String,
-            customerAddress: String,
-            customerCity: String,
-            customerPostalCode: String,
-            customerCountry: String
+            userName: String,
+            password: String,
+            firstName:String,
+            lastName:String,
+            adress: String,
+            city: String,
+            postalCode: String,
+            country: String
         ) {
             customerDatabase = initializeDB(context)
 
             CoroutineScope(Dispatchers.IO).launch {
                 val customerDetails = CustomerModel(
-                    customerName,
-                    customerPassword,
-                    customerAddress,
-                    customerCity,
-                    customerPostalCode,
-                    customerCountry
+                    userName,
+                    password,
+                    firstName,
+                    lastName,
+                    adress,
+                    city,
+                    postalCode,
+                    country
                 )
                 customerDatabase!!.customerDao().insertCustomer(customerDetails)
             }
@@ -49,6 +54,18 @@ class CustomerRepository {
             customerModel = customerDatabase!!.customerDao().getCustomer(customerName, customerPassword)
             return customerModel
         }
+
+        fun updateCustomerInfo(context: Context, userId:Int,userName: String, password: String, firstName: String, lastName:String, address:String, city:String, country: String, postalCode: String){
+            customerDatabase = initializeDB(context)
+            customerDatabase!!.customerDao().updateUserInfo(userId,userName, password,firstName,lastName, address, city, country, postalCode)
+        }
+
+        fun getCustomerById(context: Context, customerId:Int): LiveData<CustomerModel>?{
+            customerDatabase = initializeDB(context)
+            customerModel = customerDatabase!!.customerDao().getCustomerById(customerId)
+            return customerModel
+        }
+
 
     }
 }

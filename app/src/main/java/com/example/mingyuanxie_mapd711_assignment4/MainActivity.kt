@@ -17,8 +17,8 @@ class MainActivity : AppCompatActivity() {
     lateinit var context: Context
     lateinit var customerViewModel: CustomerViewModel
     lateinit var productViewModel: ProductViewModel
-    lateinit var customerName: String
-    lateinit var customerPassword: String
+    lateinit var userName: String
+    lateinit var password: String
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -47,10 +47,10 @@ class MainActivity : AppCompatActivity() {
 
     fun btnLogin_pressed(view: View){
         if(view.id == R.id.btn_login_submit){
-            customerName = findViewById<EditText>(R.id.editText_username).text.toString()
-            customerPassword = findViewById<EditText>(R.id.editText_password).text.toString()
+            userName = findViewById<EditText>(R.id.editText_username).text.toString()
+            password = findViewById<EditText>(R.id.editText_password).text.toString()
 
-            customerViewModel.getCustomer(context, customerName,customerPassword)!!.observe(this, Observer {
+            customerViewModel.getCustomer(context, userName,password)!!.observe(this, Observer {
                 if (it == null) {
                     Toast.makeText( context,"Wrong username or password",Toast.LENGTH_LONG).show()
                 }
@@ -58,7 +58,7 @@ class MainActivity : AppCompatActivity() {
                     //Toast.makeText( context,it.CustomerName+" "+ it.CustomerPassword,Toast.LENGTH_LONG).show()
                     val sharedPref: SharedPreferences = this.getSharedPreferences("MyPref", MODE_PRIVATE)
                     val editor: SharedPreferences.Editor = sharedPref.edit()
-                    editor.putString("customerId",it.CustomerId.toString())
+                    editor.putString("customerId",it.UserId.toString())
                     editor.commit()
                     val intent = Intent(this@MainActivity, ProductListActivity::class.java)
                     startActivity(intent)

@@ -44,10 +44,13 @@ class OrderDetailsActivity: AppCompatActivity()  {
             var intent = Intent(this@OrderDetailsActivity, MyOrderActivity::class.java)
             startActivity(intent)
         }else if(item.itemId == R.id.updateUserInfo){
-            var intent = Intent(this@OrderDetailsActivity, UpdateUserInfo::class.java)
+            var intent = Intent(this@OrderDetailsActivity, UpdateUserInfoActivity::class.java)
             startActivity(intent)
         }else if(item.itemId == R.id.product){
             var intent = Intent(this@OrderDetailsActivity, ProductListActivity::class.java)
+            startActivity(intent)
+        }else if(item.itemId == R.id.logout){
+            var intent = Intent(this@OrderDetailsActivity, MainActivity::class.java)
             startActivity(intent)
         }
         return true
@@ -82,7 +85,18 @@ class OrderDetailsActivity: AppCompatActivity()  {
             CoroutineScope(Dispatchers.IO).launch {
                 orderViewModel.updateOrderStatus(context,orderId,"Delivered")
             }
-            Toast.makeText( context,orderId.toString(), Toast.LENGTH_LONG).show()
+            Toast.makeText( context,"Your order has been delivered ", Toast.LENGTH_LONG).show()
+        }
+    }
+
+    fun btn_cancelOrder_pressed(view: View) {
+        if (view.id == R.id.btn_cancelOrder) {
+            val sharedPref: SharedPreferences = this.getSharedPreferences("MyPref", MODE_PRIVATE)
+            val orderId = sharedPref.getString("orderId", "")!!.toInt()
+            CoroutineScope(Dispatchers.IO).launch {
+                orderViewModel.updateOrderStatus(context,orderId,"Canceled")
+            }
+            Toast.makeText( context,"Your order has been canceled", Toast.LENGTH_LONG).show()
         }
     }
 }

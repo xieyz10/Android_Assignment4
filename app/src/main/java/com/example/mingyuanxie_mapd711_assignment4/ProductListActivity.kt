@@ -46,10 +46,13 @@ class ProductListActivity: AppCompatActivity()  {
             var intent = Intent(this@ProductListActivity, MyOrderActivity::class.java)
             startActivity(intent)
         }else if(item.itemId == R.id.updateUserInfo){
-            var intent = Intent(this@ProductListActivity, UpdateUserInfo::class.java)
+            var intent = Intent(this@ProductListActivity, UpdateUserInfoActivity::class.java)
             startActivity(intent)
         }else if(item.itemId == R.id.product){
             var intent = Intent(this@ProductListActivity, ProductListActivity::class.java)
+            startActivity(intent)
+        } else if(item.itemId == R.id.logout){
+            var intent = Intent(this@ProductListActivity, MainActivity::class.java)
             startActivity(intent)
         }
         return true

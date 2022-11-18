@@ -3,13 +3,11 @@ package com.example.mingyuanxie_mapd711_assignment4
 import android.content.Context
 import android.content.Intent
 import android.content.SharedPreferences
-import android.graphics.Color
 import android.os.Bundle
 import android.view.Menu
 import android.view.MenuItem
 import android.widget.AdapterView
 import android.widget.ListView
-import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
@@ -36,12 +34,6 @@ class MyOrderActivity: AppCompatActivity()  {
         context = this@MyOrderActivity
         orderViewModel = ViewModelProvider(this).get(OrderViewModel::class.java)
         productViewModel = ViewModelProvider(this).get(ProductViewModel::class.java)
-        var status =findViewById<TextView>(R.id.textview_status)
-        if(status.text == "Delivered"){
-            status.setTextColor(Color.GREEN)
-        }else if(status.text == "Canceled"){
-            status.setTextColor(Color.RED)
-        }
         setupOrderList()
         setupListItemClickEvent()
     }
@@ -56,10 +48,13 @@ class MyOrderActivity: AppCompatActivity()  {
             var intent = Intent(this@MyOrderActivity, MyOrderActivity::class.java)
             startActivity(intent)
         }else if(item.itemId == R.id.updateUserInfo){
-            var intent = Intent(this@MyOrderActivity, UpdateUserInfo::class.java)
+            var intent = Intent(this@MyOrderActivity, UpdateUserInfoActivity::class.java)
             startActivity(intent)
         }else if(item.itemId == R.id.product){
             var intent = Intent(this@MyOrderActivity, ProductListActivity::class.java)
+            startActivity(intent)
+        }else if(item.itemId == R.id.logout){
+            var intent = Intent(this@MyOrderActivity, MainActivity::class.java)
             startActivity(intent)
         }
         return true

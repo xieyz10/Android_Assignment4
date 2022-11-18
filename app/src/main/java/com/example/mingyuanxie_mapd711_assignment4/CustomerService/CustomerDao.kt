@@ -13,7 +13,12 @@ interface CustomerDao {
     fun insertCustomer(customerModel: CustomerModel)
 
     //defining a query method using @Query Annotation
-    @Query("SELECT * FROM customer WHERE customerName =:customerName and customerPassword=:customerPassword")
-    fun getCustomer(customerName: String, customerPassword:String) : LiveData<CustomerModel>
+    @Query("SELECT * FROM customer WHERE userName =:userName and password=:password")
+    fun getCustomer(userName: String, password:String) : LiveData<CustomerModel>
 
+    @Query("SELECT * FROM customer WHERE userId =:userId")
+    fun getCustomerById(userId: Int) : LiveData<CustomerModel>
+
+    @Query("UPDATE customer SET userName=:userName, password=:password, firstName=:firstName, lastName=:lastName, address=:address, city=:city, country=:country, postalCode=:postalCode WHERE userId =:userId")
+    fun updateUserInfo(userId:Int,userName:String, password: String, firstName:String, lastName:String, address:String, city:String, country:String, postalCode:String)
 }
